@@ -1,9 +1,22 @@
 import React, { memo } from 'react'
+import { Provider } from 'react-redux'
+import { renderRoutes } from 'react-router-config'
+
+import routes from './router'
+import store from './store'
+
+import ALAppHeader from '@/components/app-header'
+import ALAppFooter from '@/components/app-footer'
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default memo(function App() {
     return (
-        <div>
-            <h2>App</h2>
-        </div>
+        <Provider store={store}>
+            <BrowserRouter>
+                <ALAppHeader />
+                {renderRoutes(routes)}
+                <ALAppFooter />
+            </BrowserRouter>
+        </Provider>
     )
 })

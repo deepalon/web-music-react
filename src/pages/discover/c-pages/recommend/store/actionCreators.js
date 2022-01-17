@@ -1,4 +1,4 @@
-import { getTopBanners, getHotRecommends } from '@/service/recommend'
+import { getTopBanners, getHotRecommends, getNewAlbums, getTopList } from '@/service/recommend'
 
 import * as actionTypes from './constans'
 
@@ -12,6 +12,26 @@ const changeHotRecommendAction = (res) => ({
     hotRecommends: res.result
 })
 
+const changeNewAlbumAction = (res) => ({
+    type: actionTypes.CHANGE_NEW_ALBUM,
+    newAlbums: res.albums
+})
+
+const changeUpRankingAction = (res) => ({
+    type: actionTypes.CHANGE_UP_RANKING,
+    upRanking: res.playlist
+})
+
+const changeNewRankingAction = (res) => ({
+    type: actionTypes.CHANGE_NEW_RANKING,
+    newRanking: res.playlist
+})
+
+const changeOriginRankingAction = (res) => ({
+    type: actionTypes.CHANGE_ORIGIN_RANKING,
+    originRanking: res.playlist
+})
+
 export const getTopBannerAction = () => {
     return dispatch => {
         getTopBanners().then((res) => {
@@ -20,11 +40,37 @@ export const getTopBannerAction = () => {
     }
 }
 
-export const getHotRecommendAction = () => {
+export const getHotRecommendAction = (limit) => {
     return dispatch => {
-        getHotRecommends().then((res) => {
-            // console.log(res);
+        getHotRecommends(limit).then((res) => {
             dispatch(changeHotRecommendAction(res))
         })
+    }
+}
+
+export const getNewAlbumAction = (limit) => {
+    return dispatch => {
+        getNewAlbums(limit).then(res => {
+            dispatch(changeNewAlbumAction(res))
+        })
+    }
+}
+
+export const getTopListAction = (idx) => {
+    return dispatch => {
+        getTopList(idx).then(res => {
+            switch (idx) {
+                case 0:
+                    dispatch(changeUpRankingAction(res));
+                    break;
+                case 2:
+                    dispatch(changeNewRankingAction(res));
+                    break;
+                case 3:
+                    dispatch(changeOriginRankingAction(res));
+                    break;
+                default:
+            }
+        });
     }
 }

@@ -7,6 +7,7 @@ import store from './store'
 
 import ALAppHeader from '@/components/app-header'
 import ALAppFooter from '@/components/app-footer'
+import ALAppPlayerBar from '@/pages/player/app-player-bar'
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default memo(function App() {
@@ -17,6 +18,7 @@ export default memo(function App() {
                 {renderRoutes(routes)}
                 <ALAppFooter />
             </BrowserRouter>
+            <ALAppPlayerBar />
         </Provider>
     )
 })

@@ -5,6 +5,9 @@ import ALHotRecommend from './c-cpns/hot-recommend'
 import ALNewAlbum from './c-cpns/new-album'
 import ALRecommendRanking from './c-cpns/recommend-rangking'
 
+import ALSettleSinger from './c-cpns/settle-singer'
+import ALUserLogin from './c-cpns/user-login'
+
 import {
     RecommendWrapper,
     Content,
@@ -23,7 +26,10 @@ export default memo(function ALRecommend() {
                     <ALNewAlbum />
                     <ALRecommendRanking />
                 </RecommendLeft>
-                <RecommendRight></RecommendRight>
+                <RecommendRight>
+                    <ALUserLogin />
+                    <ALSettleSinger />
+                </RecommendRight>
             </Content>
         </RecommendWrapper>
     )

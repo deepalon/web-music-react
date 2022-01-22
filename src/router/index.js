@@ -8,6 +8,7 @@ import ALSongs from '@/pages/discover/c-pages/songs'
 import ALDjradio from '@/pages/discover/c-pages/djradio'
 import ALArtist from '@/pages/discover/c-pages/artist'
 import ALAlbum from '@/pages/discover/c-pages/album'
+import ALPlayer from '@/pages/player'
 
 const routes = [
     {
@@ -48,6 +49,10 @@ const routes = [
                 path: '/discover/album',
                 component: ALAlbum
             },
+            {
+                path: '/discover/player',
+                component: ALPlayer
+            }
         ]
     },
     {

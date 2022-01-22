@@ -17,8 +17,8 @@ export default memo(function App() {
                 <ALAppHeader />
                 {renderRoutes(routes)}
                 <ALAppFooter />
+                <ALAppPlayerBar />
             </BrowserRouter>
-            <ALAppPlayerBar />
         </Provider>
     )
 })

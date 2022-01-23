@@ -23,10 +23,14 @@ const changeLyricListAction = (lyricList) => ({
     lyricList
 })
 
-
 export const changeSequenceAction = (sequence) => ({
     type: actionTypes.CHANGE_SEQUENCE,
     sequence
+})
+
+export const changeCurrentLyricIndexAction = (currentLyricIndex) => ({
+    type: actionTypes.CHANGE_CURRENT_LYRIC_INDEX,
+    currentLyricIndex
 })
 
 export const changeCurrentIndexAndSongAction = (tag) => {

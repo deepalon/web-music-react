@@ -2,9 +2,10 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { getSizeImage, formatMinuteSecond, getPlaySong } from '@/utils/format-utils'
-import { getSongDetailAction, changeSequenceAction, changeCurrentIndexAndSongAction } from '../store/actionCreator'
+import { getSongDetailAction, changeSequenceAction, changeCurrentIndexAndSongAction, changeCurrentLyricIndexAction } from '../store/actionCreator'
 
-import { Slider } from 'antd'
+import { Slider, message } from 'antd'
+
 import { NavLink } from 'react-router-dom'
 import {
     PlaybarWrapper,
@@ -20,9 +21,11 @@ export default memo(function ALAppPlayerBar() {
     const [isPlay, setIsPlay] = useState(false)
 
 
-    const { currentSong, sequence } = useSelector(state => ({
+    const { currentSong, sequence, lyricList, currentLyricIndex } = useSelector(state => ({
         currentSong: state.getIn(['player', 'currentSong']),
-        sequence: state.getIn(['player', 'sequence'])
+        sequence: state.getIn(['player', 'sequence']),
+        lyricList: state.getIn(['player', 'lyricList']),
+        currentLyricIndex: state.getIn(['player', 'currentLyricIndex']),
     }), shallowEqual)
 
     const dispatch = useDispatch()
@@ -56,9 +59,28 @@ export default memo(function ALAppPlayerBar() {
     }, [isPlay])
 
     const timeUpdate = (e) => {
+        const currentTime = e.target.currentTime
         if (!isChanging) {
-            setCurrentTime(e.target.currentTime * 1000)
-            setProgress(currentTime / duration * 100)
+            setCurrentTime(currentTime * 1000)
+            setProgress(currentTime * 1000 / duration * 100);
+        }
+
+        //获取当前播放进度的歌词
+        let i = 0
+        for (; i < lyricList.length; i++) {
+            const lyricItem = lyricList[i];
+            if (currentTime * 1000 < lyricItem.time) break;
+        }
+        if (currentLyricIndex !== i - 1) {
+            dispatch(changeCurrentLyricIndexAction(i - 1))
+            console.log(lyricList[i - 1]);
+            const content = lyricList[i - 1] && lyricList[i - 1].content
+            message.open({
+                key: 'lyric',
+                duration: 0,
+                content: content,
+                className:'lyric-class'
+            })
         }
     }
 
